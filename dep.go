@@ -3,16 +3,24 @@ package sayhello
 import "fmt"
 
 // depVersion matches the git tag of the module for this dependency
-const depVersion = "v2.0.1"
+const depVersion = "v3.0.0"
 
-func say(greeting, name string) {
-	fmt.Printf("%s %s (from dep %s)", greeting, name, depVersion)
+func versionInfo() string {
+	return fmt.Sprintf("(from dep %s)", depVersion)
 }
 
-func Hello(name string) {
-	Greet("Hello", name)
+type Greeting struct {
+	Phrase string
+	Name   string
 }
 
-func Greet(phrase, name string) {
-	say(phrase, name)
+func (g Greeting) Greet() {
+	msg := "Hello"
+	if g.Phrase != "" {
+		msg = g.Phrase
+	}
+	if g.Name != "" {
+		msg += " " + g.Name
+	}
+	fmt.Printf("%s %s\n", msg, versionInfo())
 }
